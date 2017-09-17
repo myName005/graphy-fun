@@ -40,7 +40,8 @@ module.exports = {
   },
   resolve: {
     alias: {
-      'vue$': 'vue/dist/vue.esm.js'
+      'vue$': 'vue/dist/vue.esm.js',
+      'math-expression-evaluator$': 'math-expression-evaluator/dist/browser/math-expression-evaluator.js'
     }
   },
   devServer: {
