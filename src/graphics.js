@@ -14,7 +14,9 @@ var toPixelSpaceMany = function ( points, viewport, display ) {
 }
 
 
-
+var config = {
+	pointsNumber:200
+}
 
 
 var graphics = function (ctx,viewport) {
@@ -25,6 +27,8 @@ var graphics = function (ctx,viewport) {
 	this.ctx = ctx
 	this.viewport = viewport
 }
+
+
 
 
 
@@ -48,6 +52,9 @@ graphics.prototype.renderLines = function(points){
 	ctx.stroke()
 }
 
+
+
+
 graphics.prototype.renderLinesString = function (points){
 	var ctx = this.ctx;
 	var pixelPoints = toPixelSpaceMany(points , this.viewport, this.size)
@@ -55,10 +62,13 @@ graphics.prototype.renderLinesString = function (points){
 	ctx.beginPath()
 
 	for(var i =0;i<pixelPoints.length;i++){
-		ctx.lineTo(pixelPoints[i].x , pixelPoints[i].x)
+		ctx.lineTo(pixelPoints[i].x , pixelPoints[i].y)
 	}
 	ctx.stroke()
 }
+
+
+
 
 
 
@@ -99,6 +109,9 @@ graphics.prototype.renderGrid = function () {
 	this.renderLines(points)
 }
 
+
+
+
 graphics.prototype.renderAxies = function () {
 	var points = [];
 
@@ -125,6 +138,25 @@ graphics.prototype.renderAxies = function () {
 	this.ctx.strokeStyle="#f00";
 	this.renderLines(points)
 }
+
+
+
+
+graphics.prototype.renderFunction = function (func) {
+	var points = []
+
+	for(var i=0; i<config.pointsNumber; i++){
+
+		var x = this.viewport.left
+		+i*(this.viewport.right-this.viewport.left)/config.pointsNumber;
+		var y = func(x)
+		points.push({x,y})
+	}
+
+	this.renderLinesString(points)
+}
+
+
 
 
 graphics.prototype.clear = function () {

@@ -21,6 +21,9 @@ export default {
 			graphics.clear()
 			graphics.renderGrid()
 			graphics.renderAxies()
+			graphics.renderFunction(function (x) {
+				return x*x;
+			})
 		}
 	},
 
