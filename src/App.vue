@@ -8,7 +8,7 @@
             <board></board>
           </div>
           <div class="column is-4">
-              
+              <function-list></function-list>
           </div>
         </div>
       </section>
@@ -20,13 +20,14 @@
 <script>
 import navbar from './components/navbar.vue'
 import board from './components/board.vue'
-
+import functionList from './components/functionsList.vue'
 
 export default {
   name: 'app',
   components:{
     'navbar':navbar,
     'board':board,
+    'function-list':functionList
   }
 }
 </script>
