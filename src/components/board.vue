@@ -7,6 +7,9 @@ import Graphics from './../graphics.js'
 
 
 export default {
+	props:['functions'],
+
+
 	data(){return{
 		width:800,
 		height:600,
@@ -21,9 +24,12 @@ export default {
 			graphics.clear()
 			graphics.renderGrid()
 			graphics.renderAxies()
-			graphics.renderFunction(function (x) {
-				return x*x;
-			})
+
+			var functions = this.functions
+			for(var i=0;i<functions.length;i++){
+				graphics.renderFunction(functions[i])
+			}
+
 		}
 	},
 

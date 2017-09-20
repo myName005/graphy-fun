@@ -135,7 +135,7 @@ graphics.prototype.renderAxies = function () {
 		y:this.viewport.top
 	})
 
-	this.ctx.strokeStyle="#f00";
+	this.ctx.strokeStyle="#000";
 	this.renderLines(points)
 }
 
@@ -149,11 +149,13 @@ graphics.prototype.renderFunction = function (func) {
 
 		var x = this.viewport.left
 		+i*(this.viewport.right-this.viewport.left)/config.pointsNumber;
-		var y = func(x)
+		var y = func.calculate(x)
 		points.push({x,y})
 	}
-
+	this.ctx.lineWidth=2
+	this.ctx.strokeStyle = func.color
 	this.renderLinesString(points)
+	this.ctx.lineWidth=1
 }
 
 

@@ -29,6 +29,7 @@
 
 <script>
 import functionParse from './../functionParse.js'
+import randomColor from './../tools/colors.js'
 
 export default {
 	props:['functions'],
@@ -44,6 +45,7 @@ export default {
 			var func = {};
 			func.expression = this.expression
 			func.calculate = functionParse(this.expression)
+			func.color = randomColor()
 
 			this.$emit('input',func)
 			this.expression = ''

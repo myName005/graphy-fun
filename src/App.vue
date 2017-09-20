@@ -5,7 +5,7 @@
       <section class="section">
         <div class="columns">
           <div class="column is-8">
-            <board></board>
+            <board :functions="functions"></board>
           </div>
           <div class="column is-4">
             <function-list @input="addFunction" :functions="functions"></function-list>
