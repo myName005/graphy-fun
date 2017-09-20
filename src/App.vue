@@ -8,7 +8,8 @@
             <board :functions="functions"></board>
           </div>
           <div class="column is-4">
-            <function-list @input="addFunction" :functions="functions"></function-list>
+            <function-list :functions="functions"
+            @input="addFunction" @delete="deleteFunction"></function-list>
           </div>
         </div>
       </section>
@@ -37,6 +38,9 @@ export default {
   methods:{
     addFunction(func){
       this.functions.push(func)
+    },
+    deleteFunction(key){
+      this.functions.splice(key,1)
     }
 
   }

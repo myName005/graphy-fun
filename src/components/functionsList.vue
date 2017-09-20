@@ -20,7 +20,7 @@
 			</span>
 			<div class="container">
 				{{func.expression}}
-				<span class="delete is-pulled-right"></span>
+				<span class="delete is-pulled-right" @click="deleteFunction(key)"></span>
 			</div>
 		</a>
 
@@ -49,6 +49,10 @@ export default {
 
 			this.$emit('input',func)
 			this.expression = ''
+		},
+
+		deleteFunction(key){
+			this.$emit('delete',key)
 		}
 	}
 }
