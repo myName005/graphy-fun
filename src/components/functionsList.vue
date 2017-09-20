@@ -14,12 +14,12 @@
 			</p>
 		</div>
 		
-		<a class="panel-block">
+		<a class="panel-block" v-for="(func,key) in functions">
 			<span class="panel-icon">
 				<i class="fa fa-circle"></i>
 			</span>
 			<div class="container">
-				Bureg
+				{{func.expression}}
 				<span class="delete is-pulled-right"></span>
 			</div>
 		</a>
@@ -28,6 +28,8 @@
 </template>
 
 <script>
+import functionParse from './../functionParse.js'
+
 export default {
 	props:['functions'],
 	
@@ -39,8 +41,12 @@ export default {
 	
 	methods:{
 		addFunction(){
-			this.$emit('input',this.expression)
-			this.expression = '';
+			var func = {};
+			func.expression = this.expression
+			func.calculate = functionParse(this.expression)
+
+			this.$emit('input',func)
+			this.expression = ''
 		}
 	}
 }

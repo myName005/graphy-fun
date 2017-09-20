@@ -8,7 +8,7 @@
             <board></board>
           </div>
           <div class="column is-4">
-              <function-list></function-list>
+            <function-list @input="addFunction" :functions="functions"></function-list>
           </div>
         </div>
       </section>
@@ -28,6 +28,17 @@ export default {
     'navbar':navbar,
     'board':board,
     'function-list':functionList
+  },
+
+  data(){return{
+    functions:[]
+  }},
+
+  methods:{
+    addFunction(func){
+      this.functions.push(func)
+    }
+
   }
 }
 </script>
