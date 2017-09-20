@@ -1,5 +1,20 @@
 <template>
-	<canvas v-graph class="card" :width="width" :height="height"></canvas>
+	<div class="box">
+		<canvas 
+			v-graph 
+			 :width="width" 
+			 :height="height">
+		</canvas>
+
+		<a class="button" @click="zoomin">
+			<i class="fa fa-search-plus"></i>
+		</a>
+		<a class="button" @click="zoomout">
+			<i class="fa fa-search-minus"></i>
+		</a>
+	</div>
+	
+
 </template>
 
 <script>
@@ -29,8 +44,15 @@ export default {
 			for(var i=0;i<functions.length;i++){
 				graphics.renderFunction(functions[i])
 			}
+		},
 
+		zoomin(){
+			this.graphics.zoom(1/1.5)
+		},
+		zoomout(){
+			this.graphics.zoom(1.5)
 		}
+
 	},
 
 

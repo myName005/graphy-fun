@@ -164,4 +164,24 @@ graphics.prototype.renderFunction = function (func) {
 graphics.prototype.clear = function () {
 	this.ctx.clearRect(0,0,this.size.width , this.size.height)
 }
+
+
+
+graphics.prototype.zoom = function(ratio){
+	
+	var c1 = (ratio+1)/2 , c2 = (1-ratio)/2
+	var {left,right,top,bottom} = this.viewport
+	
+	this.viewport ={
+		left: left*c1 + right*c2,
+		right: right*c1 + left*c2,
+		top: top*c1 + bottom*c2,
+		bottom: bottom*c1 + top*c2
+	}
+	
+}
+
+
+
+
 export default graphics
