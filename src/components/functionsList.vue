@@ -22,7 +22,7 @@
 
 
 		<a class="panel-block" v-for="(func,key) in functions">
-			<span class="panel-icon">
+			<span class="panel-icon" :style="'color:'+func.color">
 				<i class="fa fa-circle"></i>
 			</span>
 			<div class="container">
