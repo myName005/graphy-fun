@@ -178,7 +178,16 @@ graphics.prototype.zoom = function(ratio){
 		top: top*c1 + bottom*c2,
 		bottom: bottom*c1 + top*c2
 	}
-	
+}
+
+graphics.prototype.drag = function(movementX,movementY){
+	var realX = (this.viewport.right - this.viewport.left)*movementX / this.size.width
+	var realY = (this.viewport.top - this.viewport.bottom)*movementY / this.size.height
+
+	this.viewport.left -= realX
+	this.viewport.right -= realX
+	this.viewport.top += realY
+	this.viewport.bottom += realY
 }
 
 

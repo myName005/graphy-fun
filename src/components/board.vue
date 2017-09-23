@@ -1,9 +1,14 @@
 <template>
 	<div class="box">
 		<canvas 
+			:class="{draged:mouse.clicking}" 
 			v-graph 
-			 :width="width" 
-			 :height="height">
+			:width="width" 
+			:height="height"
+			@mouseup="mouseup"
+			@mousedown="mousedown"
+			@mousemove="mousemove"
+			@mouseleave="mouseup">
 		</canvas>
 
 		<a class="button" @click="zoomin">
@@ -17,6 +22,17 @@
 
 </template>
 
+
+
+<style scoped lang="css">
+.draged{
+	cursor:grabbing;
+}
+</style>
+
+
+
+
 <script>
 import Graphics from './../graphics.js'
 
@@ -28,7 +44,10 @@ export default {
 	data(){return{
 		width:800,
 		height:600,
-		graphics: {}
+		graphics: {},
+		mouse:{
+			clicking:false
+		}
 	}},
 
 
@@ -51,7 +70,24 @@ export default {
 		},
 		zoomout(){
 			this.graphics.zoom(1.5)
-		}
+		},
+
+		testT(){
+			alert('zefzef')
+		},
+
+		mousedown(){
+			this.mouse.clicking = true;
+		},
+		mouseup(){
+			this.mouse.clicking = false;
+		},
+		mousemove(e){
+			if(this.mouse.clicking){
+				var {movementX,movementY} = e
+				this.graphics.drag(movementX,movementY)
+			}
+		},
 
 	},
 
@@ -68,13 +104,16 @@ export default {
 				vnode.context.render()
 			},
 
-
-			update:function (e,binding,vnode) {
+			update:function(e,binding,vnode){
 				vnode.context.render()
 			}
+			
+
 
 
 		}
 	}
 }
 </script>
+
+
