@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import functionParse from './../functionParse.js'
+import functionParse from './../tools/functionParse.js'
 import randomColor from './../tools/colors.js'
 
 export default {

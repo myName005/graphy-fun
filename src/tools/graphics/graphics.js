@@ -2,8 +2,8 @@
 
 var toPixelSpace = function ( point, viewport, display ) {
 	var pixelPoint = {}
-	pixelPoint.x = display.width*(point.x - viewport.left)/(viewport.right - viewport.left)
-	pixelPoint.y = display.height*(point.y - viewport.top)/(viewport.bottom - viewport.top)
+	pixelPoint.x = display.width*(point.x - viewport.left)/(viewport.width)
+	pixelPoint.y =- display.height*(point.y - viewport.top)/(viewport.height)
 	return pixelPoint
 }
 
@@ -144,11 +144,12 @@ graphics.prototype.renderAxies = function () {
 
 graphics.prototype.renderFunction = function (func) {
 	var points = []
-
+	var vLeft = this.viewport.left
+	var vWidth = this.viewport.width
+	var n = config.pointsNumber
 	for(var i=0; i<config.pointsNumber; i++){
 
-		var x = this.viewport.left
-		+i*(this.viewport.right-this.viewport.left)/config.pointsNumber;
+		var x = vLeft + (i*vWidth)/n;
 		var y = func.calculate(x)
 		points.push({x,y})
 	}
@@ -168,26 +169,15 @@ graphics.prototype.clear = function () {
 
 
 graphics.prototype.zoom = function(ratio){
-	
-	var c1 = (ratio+1)/2 , c2 = (1-ratio)/2
-	var {left,right,top,bottom} = this.viewport
-	
-	this.viewport ={
-		left: left*c1 + right*c2,
-		right: right*c1 + left*c2,
-		top: top*c1 + bottom*c2,
-		bottom: bottom*c1 + top*c2
-	}
+	this.viewport.scale(ratio)
 }
 
 graphics.prototype.drag = function(movementX,movementY){
-	var realX = (this.viewport.right - this.viewport.left)*movementX / this.size.width
-	var realY = (this.viewport.top - this.viewport.bottom)*movementY / this.size.height
+	var vector = {}
+	vector.x = -(this.viewport.right - this.viewport.left)*movementX / this.size.width
+	vector.y = (this.viewport.top - this.viewport.bottom)*movementY / this.size.height
 
-	this.viewport.left -= realX
-	this.viewport.right -= realX
-	this.viewport.top += realY
-	this.viewport.bottom += realY
+	this.viewport.move(vector)
 }
 
 

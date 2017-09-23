@@ -34,7 +34,8 @@
 
 
 <script>
-import Graphics from './../graphics.js'
+import Graphics from './../tools/graphics/graphics.js'
+import Viewport from './../tools/graphics/viewport.js'
 
 
 export default {
@@ -98,9 +99,9 @@ export default {
 		graph:{
 			
 			bind:function (e,binding,vnode) {
-				var viewport = {left:-8 , right:8,top:6   , bottom:-6}
+				var viewport = new Viewport(-8 ,8,6,-6)
 				var ctx = e.getContext('2d')
-				vnode.context.graphics = new Graphics(e.getContext('2d'),viewport)
+				vnode.context.graphics = new Graphics(ctx,viewport)
 				vnode.context.render()
 			},
 
