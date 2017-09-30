@@ -68,19 +68,27 @@ graphics.prototype.renderLinesString = function (points){
 }
 
 
-
+function stepFunction(x,a,b,x0){
+	var q = a/b;
+	var expo =Math.log(x/x0)/Math.log(q)
+	return x0 * a * Math.pow(q,Math.floor( expo )) 
+}
 
 
 
 graphics.prototype.renderGrid = function () {
 	var points = []
-
+	var step = stepFunction(this.viewport.width , 1/ 10 , 1 / 20 , 5)
 	
-	//horizontal lines of the grid
-	var start = Math.ceil(this.viewport.left);
-	var end = Math.floor(this.viewport.right)
 
-	for(var i = start;i<= end ; i++){
+	//horizontal lines of the grid
+	var start = Math.ceil(this.viewport.left/step)*step
+	var end = Math.floor(this.viewport.right/step)*step
+	console.clear()
+	console.log('left: '+this.viewport.left)
+	console.log('start: '+start)
+	console.log('step: '+step)
+	for(var i = start;i<= end ; i+=step){
 		points.push({
 			x:i,
 			y:this.viewport.bottom
@@ -92,10 +100,10 @@ graphics.prototype.renderGrid = function () {
 	}
 
 	//horizontal lines of the grid
-	var start = Math.ceil(this.viewport.bottom);
-	var end = Math.floor(this.viewport.top)
+	var start = Math.ceil(this.viewport.bottom/step)*step;
+	var end = Math.floor(this.viewport.top/step)*step
 
-	for(var i = start;i<= end ; i++){
+	for(var i = start;i<= end ; i+=step){
 		points.push({
 			x:this.viewport.left,
 			y:i
