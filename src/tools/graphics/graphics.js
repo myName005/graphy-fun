@@ -67,11 +67,28 @@ graphics.prototype.renderLinesString = function (points){
 	ctx.stroke()
 }
 
+graphics.prototype.renderText = function(opt){
+	var option = {}
+	option.text = opt.text
+	option.position = opt.position || {x:0,y:0}
+	option.fontColor = opt.fontColor || "#222"
+	option.font = option.font || "15px arial"
+	option.padding = option.padding || {x:5,y:-5}
 
-function stepFunction(x,a,b,x0){
-	var q = a/b;
-	var expo =Math.log(x/x0)/Math.log(q)
-	return x0 * a * Math.pow(q,Math.floor( expo )) 
+	var pixelPosition = toPixelSpace(option.position,this.viewport,this.size)
+	pixelPosition.x += option.padding.x
+	pixelPosition.y += option.padding.y
+	this.ctx.fontStyle = option.fontColor
+	this.ctx.font = option.font
+	this.ctx.fillText(option.text , pixelPosition.x , pixelPosition.y) 
+}
+
+function stepFunction(x){
+	return Math.min(
+		Math.pow(10, Math.floor( Math.log10(x))),
+		2*Math.pow(10, Math.floor( Math.log10(x/2))),
+		5*Math.pow(10, Math.floor( Math.log10(x/5)))
+	)
 }
 
 
@@ -79,15 +96,10 @@ function stepFunction(x,a,b,x0){
 graphics.prototype.renderGrid = function () {
 	var points = []
 	var step = stepFunction(this.viewport.width , 1/ 10 , 1 / 20 , 5)
-	
 
-	//horizontal lines of the grid
 	var start = Math.ceil(this.viewport.left/step)*step
 	var end = Math.floor(this.viewport.right/step)*step
-	console.clear()
-	console.log('left: '+this.viewport.left)
-	console.log('start: '+start)
-	console.log('step: '+step)
+
 	for(var i = start;i<= end ; i+=step){
 		points.push({
 			x:i,
@@ -97,9 +109,13 @@ graphics.prototype.renderGrid = function () {
 			x:i,
 			y:this.viewport.top
 		})
+		if(i<=-step/2 || i>=step/2)
+			this.renderText({
+				text: i.toPrecision(4)*1,
+				position:{ x:i ,  y:0  }
+			})
 	}
 
-	//horizontal lines of the grid
 	var start = Math.ceil(this.viewport.bottom/step)*step;
 	var end = Math.floor(this.viewport.top/step)*step
 
@@ -112,7 +128,13 @@ graphics.prototype.renderGrid = function () {
 			x:this.viewport.right,
 			y:i
 		})
+		if(i<=-step/2 || i>=step/2)
+			this.renderText({
+				text: i.toPrecision(4)*1,
+				position:{ y:i ,  x:0  }
+			})
 	}
+
 	this.ctx.strokeStyle="#aaa";
 	this.renderLines(points)
 }
